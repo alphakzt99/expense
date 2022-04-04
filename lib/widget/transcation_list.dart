@@ -11,7 +11,7 @@ class TranscationList extends StatefulWidget {
 }
 
 class _TranscationListState extends State<TranscationList> {
-  final List<Transcations> usertranscations = [
+   List<Transcations> usertranscations = [
     Transcations(
         id: "01", title: "New shoe", amount: 69.99, date: DateTime.now()),
     Transcations(
