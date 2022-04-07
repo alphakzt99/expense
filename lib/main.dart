@@ -12,6 +12,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(primarySwatch: Colors.purple),
       debugShowCheckedModeBanner: false,
       home: Expense(),
     );
@@ -62,7 +63,7 @@ class _ExpenseState extends State<Expense> {
         onPressed: () => _startNewTranscation(context),
       ),
       appBar: AppBar(
-        backgroundColor: Colors.purple,
+        title: Text('Personal Expenses'),
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,

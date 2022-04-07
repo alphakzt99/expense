@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 
-class UserTranscations extends StatelessWidget {
+class UserTranscations extends StatefulWidget {
   final Function add;
   UserTranscations(this.add);
+
+  @override
+  _UserTranscationsState createState() => _UserTranscationsState();
+}
+
+class _UserTranscationsState extends State<UserTranscations> {
   final titlecontroller = TextEditingController();
+
   final amountcontroller = TextEditingController();
 
   void submitData() {
@@ -13,7 +20,8 @@ class UserTranscations extends StatelessWidget {
     if (enteredAmount <= 0 || enteredTitle.isEmpty) {
       return;
     }
-    add(enteredTitle,enteredAmount);
+    widget.add(enteredTitle, enteredAmount);
+    Navigator.of(context).pop();
   }
 
   @override
@@ -27,13 +35,13 @@ class UserTranscations extends StatelessWidget {
             TextField(
               decoration: InputDecoration(labelText: "title"),
               controller: titlecontroller,
-              onSubmitted: (arg) =>submitData(),
+              onSubmitted: (arg) => submitData(),
             ),
             TextField(
               decoration: InputDecoration(labelText: "Amount"),
               controller: amountcontroller,
               keyboardType: TextInputType.number,
-              onSubmitted: (arg) =>submitData(),
+              onSubmitted: (arg) => submitData(),
             ),
             ElevatedButton(onPressed: submitData, child: Text("Save"))
           ],
