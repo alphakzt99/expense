@@ -12,10 +12,16 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.purple),
       debugShowCheckedModeBanner: false,
       home: Expense(),
-    );
+      theme: ThemeData(
+          primarySwatch: Colors.purple,
+          fontFamily: 'SourceSansPro',
+          //textTheme define globally and use ThemeData
+          textTheme: ThemeData.light()
+              .textTheme
+              .copyWith(headline6: TextStyle(fontFamily: 'PlayfairDisplay',fontWeight: FontWeight.w600)),   
+    ));
   }
 }
 
@@ -28,10 +34,7 @@ class Expense extends StatefulWidget {
 
 class _ExpenseState extends State<Expense> {
   List<Transcations> usertranscations = [
-    Transcations(
-        id: "01", title: "New shoe", amount: 69.99, date: DateTime.now()),
-    Transcations(
-        id: "02", title: "New phone", amount: 123.99, date: DateTime.now())
+    
   ];
   void _addTranscation(String txtitle, double txamount) {
     final newTx = Transcations(
@@ -49,9 +52,10 @@ class _ExpenseState extends State<Expense> {
         context: context,
         builder: (bctx) {
           return GestureDetector(
-            onTap: (){},
+            onTap: () {},
             child: UserTranscations(_addTranscation),
-            behavior: HitTestBehavior.opaque,);
+            behavior: HitTestBehavior.opaque,
+          );
         });
   }
 

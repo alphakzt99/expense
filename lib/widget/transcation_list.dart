@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:expense/main.dart';
-import 'package:expense/models/transcations.dart';
 import 'package:expense/widget/new_transcations.dart';
-import 'package:expense/widget/user_transcations.dart';
 
 class TranscationList extends StatefulWidget {
   List usertranscations = [];
