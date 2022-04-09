@@ -1,3 +1,4 @@
+import 'package:expense/widget/chart.dart';
 import 'package:flutter/material.dart';
 import 'package:expense/widget/transcation_list.dart';
 import 'package:expense/widget/user_transcations.dart';
@@ -34,7 +35,8 @@ class Expense extends StatefulWidget {
 
 class _ExpenseState extends State<Expense> {
   List<Transcations> usertranscations = [
-    
+    Transcations(id: 'k1', title: 'shit', amount: 12.99, date: DateTime.now()),
+    Transcations(id: 'k2', title: 'nothing', amount: 13.99, date: DateTime.parse("2022-04-06"))
   ];
   void _addTranscation(String txtitle, double txamount) {
     final newTx = Transcations(
@@ -73,7 +75,7 @@ class _ExpenseState extends State<Expense> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Column(children: [
-          Container(),
+          Chart(usertranscations),
           TranscationList(
             usertranscations: usertranscations,
           ),
