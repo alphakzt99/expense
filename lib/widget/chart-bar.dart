@@ -14,14 +14,14 @@ class ChartBar extends StatelessWidget {
           Text('\$${amount.toStringAsFixed(0)}'),
           SizedBox(),
           Container(
-            height: 40,
+            height: 60,
             width: 10,
             child: Stack(
               children: [
                 Container(
                   decoration: BoxDecoration(
                     border: Border.all(width: 1.0, color: Colors.grey),
-                    color: Color.fromRGBO(220, 220, 2, 1),
+                    color: Colors.white30,
                     borderRadius: BorderRadius.circular(10)
                   ),
                 ),
@@ -31,7 +31,8 @@ class ChartBar extends StatelessWidget {
                 ),)
               ],
             ),
-          )
+          ),
+          Text(label)
         ],
       ),
     );

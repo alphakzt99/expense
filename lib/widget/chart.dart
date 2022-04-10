@@ -35,12 +35,17 @@ class Chart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 6,
-      child: Row(
-        children: [
-          ...transcationsRecentValues.map((data) {
-            return ChartBar(data['day'].toString(),(data['amount'] as double), (data['amount'] as double) / totalspending);
-          }).toList()
-        ],
+      margin: EdgeInsets.all(10),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            ...transcationsRecentValues.map((data) {
+              return ChartBar(data['day'].toString(),(data['amount'] as double), (data['amount'] as double) / totalspending);
+            }).toList()
+          ],
+        ),
       ),
     );
   }

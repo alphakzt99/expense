@@ -35,42 +35,16 @@ class _NewTranscationsState extends State<NewTranscations> {
               itemBuilder: (context, index) {
                 return Card(
                     margin: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-                    elevation: 10,
-                    child: Container(
-                      padding: EdgeInsets.all(5),
-                      child: Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(5),
-                            margin: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.purple, width: 2)),
+                    elevation: 6,
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        radius: 30.0,
+                          child: FittedBox(
                             child: Text(
-                              '\$${widget.userTranscations[index].amount}',
-                              style: TextStyle(
-                                  color: Colors.purple,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                widget.userTranscations[index].title,
-                                //add textTheme with recalled Theme.of(context)
-                                style: Theme.of(context).textTheme.headline6,
-                              ),
-                              //dateformat
-                              Text(
-                                  DateFormat().format(
-                                      widget.userTranscations[index].date),
-                                  style: TextStyle(color: Colors.grey))
-                            ],
-                          )
-                        ],
-                      ),
+                                "\$${widget.userTranscations[index].amount}"),
+                          )),
+                      title: Text(widget.userTranscations[index].title,style: Theme.of(context).textTheme.headline6,),
+                      subtitle: Text(DateFormat.yMMMd().format(widget.userTranscations[index].date)),
                     ));
               },
               itemCount: widget.userTranscations.length,
