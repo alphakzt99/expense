@@ -21,7 +21,16 @@ class _UserTranscationsState extends State<UserTranscations> {
       return;
     }
     widget.add(enteredTitle, enteredAmount);
+    
     Navigator.of(context).pop();
+  }
+
+  void _datepicker() {
+    showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2019),
+        lastDate: DateTime.now());
   }
 
   @override
@@ -42,6 +51,17 @@ class _UserTranscationsState extends State<UserTranscations> {
               controller: amountcontroller,
               keyboardType: TextInputType.number,
               onSubmitted: (arg) => submitData(),
+            ),
+            Row(
+              children: [
+                Text("Nothing yet"),
+                TextButton(
+                    onPressed: _datepicker,
+                    child: Text(
+                      'Choose Date',
+                      style: TextStyle(color: Colors.purple),
+                    ))
+              ],
             ),
             ElevatedButton(onPressed: submitData, child: Text("Save"))
           ],

@@ -13,16 +13,18 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Expense(),
-      theme: ThemeData(
+        debugShowCheckedModeBanner: false,
+        home: Expense(),
+        theme: ThemeData(
           primarySwatch: Colors.purple,
           fontFamily: 'SourceSansPro',
+          buttonTheme:
+              ThemeData.dark().buttonTheme.copyWith(buttonColor: Colors.purple),
           //textTheme define globally and use ThemeData
-          textTheme: ThemeData.light()
-              .textTheme
-              .copyWith(headline6: TextStyle(fontFamily: 'PlayfairDisplay',fontWeight: FontWeight.w600)),   
-    ));
+          textTheme: ThemeData.light().textTheme.copyWith(
+              headline6: TextStyle(
+                  fontFamily: 'PlayfairDisplay', fontWeight: FontWeight.w600)),
+        ));
   }
 }
 
@@ -36,7 +38,11 @@ class Expense extends StatefulWidget {
 class _ExpenseState extends State<Expense> {
   List<Transcations> usertranscations = [
     Transcations(id: 'k1', title: 'shit', amount: 12.99, date: DateTime.now()),
-    Transcations(id: 'k2', title: 'nothing', amount: 13.99, date: DateTime.parse("2022-04-06"))
+    Transcations(
+        id: 'k2',
+        title: 'nothing',
+        amount: 13.99,
+        date: DateTime.parse("2022-04-06"))
   ];
   void _addTranscation(String txtitle, double txamount) {
     final newTx = Transcations(
@@ -49,15 +55,11 @@ class _ExpenseState extends State<Expense> {
     });
   }
 
-  void _startNewTranscation(BuildContext context) {
+  void _startNewTranscation() {
     showModalBottomSheet(
         context: context,
         builder: (bctx) {
-          return GestureDetector(
-            onTap: () {},
-            child: UserTranscations(_addTranscation),
-            behavior: HitTestBehavior.opaque,
-          );
+          return UserTranscations(_addTranscation);
         });
   }
 
@@ -66,7 +68,7 @@ class _ExpenseState extends State<Expense> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () => _startNewTranscation(context),
+        onPressed: _startNewTranscation,
       ),
       appBar: AppBar(
         title: Text('Personal Expenses'),
