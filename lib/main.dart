@@ -2,7 +2,6 @@ import 'package:expense/widget/chart.dart';
 import 'package:expense/widget/new_transcations.dart';
 import 'package:flutter/material.dart';
 import 'package:expense/widget/user_transcations.dart';
-
 import 'package:expense/models/transcations.dart';
 
 void main() => runApp(Home());
@@ -82,13 +81,10 @@ class _ExpenseState extends State<Expense> {
         title: Text('Personal Expenses'),
       ),
       body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Column(children: [
-          Chart(usertranscations),
-          NewTranscations(usertranscations, _deleteTranscations)
-        ]),
-      ),
+          child: Column(children: [
+        Chart(usertranscations),
+        NewTranscations(usertranscations, _deleteTranscations)
+      ])),
     );
   }
 }
