@@ -1,6 +1,6 @@
 import 'package:expense/widget/chart.dart';
+import 'package:expense/widget/new_transcations.dart';
 import 'package:flutter/material.dart';
-import 'package:expense/widget/transcation_list.dart';
 import 'package:expense/widget/user_transcations.dart';
 
 import 'package:expense/models/transcations.dart';
@@ -86,7 +86,7 @@ class _ExpenseState extends State<Expense> {
         height: MediaQuery.of(context).size.height,
         child: Column(children: [
           Chart(usertranscations),
-          TranscationList(usertranscations,_deleteTranscations),
+          NewTranscations(usertranscations, _deleteTranscations)
         ]),
       ),
     );
