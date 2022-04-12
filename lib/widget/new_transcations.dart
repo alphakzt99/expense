@@ -3,7 +3,8 @@ import 'package:intl/intl.dart';
 
 class NewTranscations extends StatefulWidget {
   List userTranscations = [];
-  NewTranscations(this.userTranscations);
+  Function deleteTranscations;
+  NewTranscations(this.userTranscations, this.deleteTranscations);
 
   @override
   _NewTranscationsState createState() => _NewTranscationsState();
@@ -38,13 +39,24 @@ class _NewTranscationsState extends State<NewTranscations> {
                     elevation: 6,
                     child: ListTile(
                       leading: CircleAvatar(
-                        radius: 30.0,
+                          radius: 30.0,
                           child: FittedBox(
                             child: Text(
                                 "\$${widget.userTranscations[index].amount}"),
                           )),
-                      title: Text(widget.userTranscations[index].title,style: Theme.of(context).textTheme.headline6,),
-                      subtitle: Text(DateFormat.yMMMd().format(widget.userTranscations[index].date)),
+                      title: Text(
+                        widget.userTranscations[index].title,
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      subtitle: Text(DateFormat.yMMMd()
+                          .format(widget.userTranscations[index].date)),
+                      trailing: IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () {
+                          widget.deleteTranscations(widget.userTranscations[index].id);
+                        },
+                        color: Theme.of(context).errorColor,
+                      ),
                     ));
               },
               itemCount: widget.userTranscations.length,

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:expense/widget/new_transcations.dart';
 
 class TranscationList extends StatefulWidget {
-  List usertranscations = [];
-  TranscationList({Key? key,required this.usertranscations}) : super(key: key);
+  List _usertranscations = [];
+  Function _deleteTranscations;
+  TranscationList(this._usertranscations, this._deleteTranscations);
 
   @override
   State<TranscationList> createState() => _TranscationListState();
@@ -14,7 +15,7 @@ class _TranscationListState extends State<TranscationList> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        NewTranscations(widget.usertranscations),
+        NewTranscations(widget._usertranscations,widget._deleteTranscations),
       ],
     );
   }

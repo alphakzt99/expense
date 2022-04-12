@@ -44,12 +44,12 @@ class _ExpenseState extends State<Expense> {
         amount: 13.99,
         date: DateTime.parse("2022-04-06"))
   ];
-  void _addTranscation(String txtitle, double txamount) {
+  void _addTranscation(String txtitle, double txamount, DateTime selectedDate) {
     final newTx = Transcations(
         id: DateTime.now().toString(),
         title: txtitle,
         amount: txamount,
-        date: DateTime.now());
+        date: selectedDate);
     setState(() {
       usertranscations.add(newTx);
     });
@@ -61,6 +61,14 @@ class _ExpenseState extends State<Expense> {
         builder: (bctx) {
           return UserTranscations(_addTranscation);
         });
+  }
+
+  void _deleteTranscations(String id) {
+    setState(() {
+      usertranscations.removeWhere((element) {
+        return element.id == id;
+      });
+    });
   }
 
   @override
@@ -78,9 +86,7 @@ class _ExpenseState extends State<Expense> {
         height: MediaQuery.of(context).size.height,
         child: Column(children: [
           Chart(usertranscations),
-          TranscationList(
-            usertranscations: usertranscations,
-          ),
+          TranscationList(usertranscations,_deleteTranscations),
         ]),
       ),
     );
