@@ -15,7 +15,7 @@ class _NewTranscationsState extends State<NewTranscations> {
     var size = MediaQuery.of(context).size;
     return Expanded(
       child: Container(
-        height: size.height,
+        height: size.height * 0.7 - AppBar().preferredSize.height - MediaQuery.of(context).padding.top,
         child: widget.userTranscations.isEmpty
             ? Column(
                 children: [
@@ -53,13 +53,21 @@ class _NewTranscationsState extends State<NewTranscations> {
                         ),
                         subtitle: Text(DateFormat.yMMMd()
                             .format(widget.userTranscations[index].date)),
-                        trailing: IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () {
-                            widget.deleteTranscations(
-                                widget.userTranscations[index].id);
-                          },
-                          color: Theme.of(context).errorColor,
+                        trailing: Row(
+                          children: [
+                            IconButton(
+                              icon: Icon(Icons.edit),
+                              onPressed: (){},
+                            ),
+                            IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                widget.deleteTranscations(
+                                    widget.userTranscations[index].id);
+                              },
+                              color: Theme.of(context).errorColor,
+                            ),
+                          ],
                         ),
                       ));
                 },
