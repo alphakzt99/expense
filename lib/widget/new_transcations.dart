@@ -1,21 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:expense/widget/user_transcations.dart';
 
 class NewTranscations extends StatefulWidget {
   List userTranscations = [];
+  Function add;
   Function deleteTranscations;
-  NewTranscations(this.userTranscations, this.deleteTranscations);
+  NewTranscations(this.userTranscations, this.deleteTranscations, this.add);
 
   @override
   _NewTranscationsState createState() => _NewTranscationsState();
 }
 
 class _NewTranscationsState extends State<NewTranscations> {
+  void _editTranscations(
+      String id, String title, double amount, DateTime date) {
+    widget.userTranscations.remove(title);
+    widget.userTranscations.remove(amount);
+    widget.userTranscations.remove(date);
+  }
+
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Expanded(
       child: Container(
-        height: size.height * 0.7 - AppBar().preferredSize.height - MediaQuery.of(context).padding.top,
+        height: size.height * 0.7 -
+            AppBar().preferredSize.height -
+            MediaQuery.of(context).padding.top,
         child: widget.userTranscations.isEmpty
             ? Column(
                 children: [
@@ -36,40 +47,43 @@ class _NewTranscationsState extends State<NewTranscations> {
               )
             : ListView.builder(
                 itemBuilder: (context, index) {
-                  return Card(
-                      margin:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-                      elevation: 6,
-                      child: ListTile(
-                        leading: CircleAvatar(
-                            radius: 30.0,
-                            child: FittedBox(
-                              child: Text(
-                                  "\$${widget.userTranscations[index].amount}"),
-                            )),
-                        title: Text(
-                          widget.userTranscations[index].title,
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
-                        subtitle: Text(DateFormat.yMMMd()
-                            .format(widget.userTranscations[index].date)),
-                        trailing: Row(
-                          children: [
-                            IconButton(
-                              icon: Icon(Icons.edit),
-                              onPressed: (){},
-                            ),
-                            IconButton(
-                              icon: Icon(Icons.delete),
-                              onPressed: () {
-                                widget.deleteTranscations(
-                                    widget.userTranscations[index].id);
-                              },
-                              color: Theme.of(context).errorColor,
-                            ),
-                          ],
-                        ),
-                      ));
+                  return Dismissible(
+                    key: ValueKey<int>(index),
+                    onDismissed: (direction) {
+                      setState(() {
+                        widget.userTranscations.removeAt(index);
+                      });
+                    },
+                    child: Card(
+                        margin:
+                            EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                        elevation: 6,
+                        child: ListTile(
+                          leading: CircleAvatar(
+                              radius: 30.0,
+                              child: FittedBox(
+                                child: Text(
+                                    "\$${widget.userTranscations[index].amount}"),
+                              )),
+                          title: Text(
+                            widget.userTranscations[index].title,
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
+                          subtitle: Text(DateFormat.yMMMd()
+                              .format(widget.userTranscations[index].date)),
+                          trailing: IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              _editTranscations(
+                                  widget.userTranscations[index].id,
+                                  widget.userTranscations[index].title,
+                                  widget.userTranscations[index].amount,
+                                  widget.userTranscations[index].date);
+                            },
+                            color: Colors.purple,
+                          ),
+                        )),
+                  );
                 },
                 itemCount: widget.userTranscations.length,
               ),

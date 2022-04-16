@@ -36,12 +36,7 @@ class Expense extends StatefulWidget {
 
 class _ExpenseState extends State<Expense> {
   List<Transcations> usertranscations = [
-    Transcations(id: 'k1', title: 'shit', amount: 12.99, date: DateTime.now()),
-    Transcations(
-        id: 'k2',
-        title: 'nothing',
-        amount: 13.99,
-        date: DateTime.parse("2022-04-06"))
+    
   ];
   void _addTranscation(String txtitle, double txamount, DateTime selectedDate) {
     final newTx = Transcations(
@@ -83,7 +78,7 @@ class _ExpenseState extends State<Expense> {
       body: Container(
           child: Column(children: [
         Chart(usertranscations),
-        NewTranscations(usertranscations, _deleteTranscations)
+        NewTranscations(usertranscations, _deleteTranscations, _addTranscation)
       ])),
     );
   }

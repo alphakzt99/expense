@@ -10,20 +10,20 @@ class UserTranscations extends StatefulWidget {
 }
 
 class _UserTranscationsState extends State<UserTranscations> {
-  final _titlecontroller = TextEditingController();
+  final titlecontroller = TextEditingController();
 
-  final _amountcontroller = TextEditingController();
-  DateTime _selectedDate = DateTime.now();
+  final amountcontroller = TextEditingController();
+  DateTime selectedDate = DateTime.now();
 
-  void _submitData() {
-    final enteredTitle = _titlecontroller.text;
-    final enteredAmount = double.parse(_amountcontroller.text);
+  void submitData() {
+    final enteredTitle = titlecontroller.text;
+    final enteredAmount = double.parse(amountcontroller.text);
 
     // ignore: unnecessary_null_comparison
-    if (enteredAmount <= 0 || enteredTitle.isEmpty || _selectedDate == null) {
+    if (enteredAmount <= 0 || enteredTitle.isEmpty || selectedDate == null) {
       return;
     }
-    widget.add(enteredTitle, enteredAmount,_selectedDate);
+    widget.add(enteredTitle, enteredAmount, selectedDate);
 
     Navigator.of(context).pop();
   }
@@ -40,7 +40,7 @@ class _UserTranscationsState extends State<UserTranscations> {
         return;
       }
       setState(() {
-        _selectedDate = value;
+        selectedDate = value;
       });
     });
   }
@@ -55,21 +55,21 @@ class _UserTranscationsState extends State<UserTranscations> {
           children: [
             TextField(
               decoration: InputDecoration(labelText: "title"),
-              controller: _titlecontroller,
-              onSubmitted: (arg) => _submitData(),
+              controller: titlecontroller,
+              onSubmitted: (arg) => submitData(),
             ),
             TextField(
               decoration: InputDecoration(labelText: "Amount"),
-              controller: _amountcontroller,
+              controller: amountcontroller,
               keyboardType: TextInputType.number,
-              onSubmitted: (arg) => _submitData(),
+              onSubmitted: (arg) => submitData(),
             ),
             Row(
               children: [
                 // ignore: unnecessary_null_comparison
-                Text(_selectedDate == null
+                Text(selectedDate == null
                     ? "Nothing yet"
-                    : 'Picked Date: ${DateFormat.yMd().format(_selectedDate)}'),
+                    : 'Picked Date: ${DateFormat.yMd().format(selectedDate)}'),
                 Flexible(
                   fit: FlexFit.tight,
                   child: TextButton(
@@ -81,7 +81,7 @@ class _UserTranscationsState extends State<UserTranscations> {
                 )
               ],
             ),
-            ElevatedButton(onPressed: _submitData, child: Text("Save"))
+            ElevatedButton(onPressed: submitData, child: Text("Save"))
           ],
         ),
       ),
