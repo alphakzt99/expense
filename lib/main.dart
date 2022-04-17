@@ -35,9 +35,7 @@ class Expense extends StatefulWidget {
 }
 
 class _ExpenseState extends State<Expense> {
-  List<Transcations> usertranscations = [
-    
-  ];
+  List<Transcations> usertranscations = [];
   void _addTranscation(String txtitle, double txamount, DateTime selectedDate) {
     final newTx = Transcations(
         id: DateTime.now().toString(),
@@ -48,6 +46,8 @@ class _ExpenseState extends State<Expense> {
       usertranscations.add(newTx);
     });
   }
+
+  bool _changed = false;
 
   void _startNewTranscation() {
     showModalBottomSheet(
@@ -67,6 +67,8 @@ class _ExpenseState extends State<Expense> {
 
   @override
   Widget build(BuildContext context) {
+    var isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -77,8 +79,40 @@ class _ExpenseState extends State<Expense> {
       ),
       body: Container(
           child: Column(children: [
-        Chart(usertranscations),
-        NewTranscations(usertranscations, _deleteTranscations, _addTranscation)
+        if (isLandscape)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Show Chart"),
+              Switch(
+                  value: _changed,
+                  onChanged: (val) {
+                    setState(() {
+                      _changed = val;
+                    });
+                  })
+            ],
+          ),
+        
+        if (!isLandscape) Container(
+          height: (MediaQuery.of(context).size.height - AppBar().preferredSize.height - MediaQuery.of(context).padding.top) * 0.3,
+          child: Chart(usertranscations,)),
+        if (!isLandscape)
+          Container(
+            height: (MediaQuery.of(context).size.height - AppBar().preferredSize.height - MediaQuery.of(context).padding.top) * 0.7,
+            child: NewTranscations(
+                usertranscations, _deleteTranscations, _addTranscation),
+          ),
+        if (isLandscape)
+          _changed
+              ? Container(
+                height: (MediaQuery.of(context).size.height - AppBar().preferredSize.height - MediaQuery.of(context).padding.top) * 0.7,
+                child: Chart(usertranscations,))
+              : Container(
+                height: (MediaQuery.of(context).size.height - AppBar().preferredSize.height - MediaQuery.of(context).padding.top) * 0.7,
+                child: NewTranscations(
+                    usertranscations, _deleteTranscations, _addTranscation),
+              ),
       ])),
     );
   }

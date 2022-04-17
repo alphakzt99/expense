@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:expense/widget/user_transcations.dart';
 
 class NewTranscations extends StatefulWidget {
   List userTranscations = [];
   Function add;
   Function deleteTranscations;
-  NewTranscations(this.userTranscations, this.deleteTranscations, this.add);
+  NewTranscations(
+    this.userTranscations,
+    this.deleteTranscations,
+    this.add,
+  );
 
   @override
   _NewTranscationsState createState() => _NewTranscationsState();
@@ -21,73 +24,67 @@ class _NewTranscationsState extends State<NewTranscations> {
   }
 
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    return Expanded(
-      child: Container(
-        height: size.height * 0.7 -
-            AppBar().preferredSize.height -
-            MediaQuery.of(context).padding.top,
-        child: widget.userTranscations.isEmpty
-            ? Column(
-                children: [
-                  Text(
-                    'No Transcation Yet',
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                      height: 200,
-                      child: Image.asset(
-                        'assets/images/Waiting.jpg',
-                        fit: BoxFit.cover,
-                      ))
-                ],
-              )
-            : ListView.builder(
-                itemBuilder: (context, index) {
-                  return Dismissible(
-                    key: ValueKey<int>(index),
-                    onDismissed: (direction) {
-                      setState(() {
-                        widget.userTranscations.removeAt(index);
-                      });
-                    },
-                    child: Card(
-                        margin:
-                            EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-                        elevation: 6,
-                        child: ListTile(
-                          leading: CircleAvatar(
-                              radius: 30.0,
-                              child: FittedBox(
-                                child: Text(
-                                    "\$${widget.userTranscations[index].amount}"),
-                              )),
-                          title: Text(
-                            widget.userTranscations[index].title,
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                          subtitle: Text(DateFormat.yMMMd()
-                              .format(widget.userTranscations[index].date)),
-                          trailing: IconButton(
-                            icon: Icon(Icons.edit),
-                            onPressed: () {
-                              _editTranscations(
-                                  widget.userTranscations[index].id,
-                                  widget.userTranscations[index].title,
-                                  widget.userTranscations[index].amount,
-                                  widget.userTranscations[index].date);
-                            },
-                            color: Colors.purple,
-                          ),
-                        )),
-                  );
+    return widget.userTranscations.isEmpty
+        ? LayoutBuilder(
+          builder: (context, constraints) => 
+          Column(
+              children: [
+                Text(
+                  'No Transcation Yet',
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                    height: constraints.maxHeight * 0.6,
+                    child: Image.asset(
+                      'assets/images/Waiting.jpg',
+                      fit: BoxFit.cover,
+                    )),
+              ],
+            ),
+        )
+        : ListView.builder(
+            itemBuilder: (context, index) {
+              return Dismissible(
+                key: ValueKey<int>(index),
+                onDismissed: (direction) {
+                  setState(() {
+                    widget.userTranscations.removeAt(index);
+                  });
                 },
-                itemCount: widget.userTranscations.length,
-              ),
-      ),
-    );
+                child: Card(
+                    margin: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                    elevation: 6,
+                    child: ListTile(
+                      leading: CircleAvatar(
+                          radius: 30.0,
+                          child: FittedBox(
+                            child: Text(
+                                "\$${widget.userTranscations[index].amount}"),
+                          )),
+                      title: Text(
+                        widget.userTranscations[index].title,
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                      subtitle: Text(DateFormat.yMMMd()
+                          .format(widget.userTranscations[index].date)),
+                      trailing: IconButton(
+                        icon: Icon(Icons.edit),
+                        onPressed: () {
+                          _editTranscations(
+                              widget.userTranscations[index].id,
+                              widget.userTranscations[index].title,
+                              widget.userTranscations[index].amount,
+                              widget.userTranscations[index].date);
+                        },
+                        color: Colors.purple,
+                      ),
+                    )),
+              );
+            },
+            itemCount: widget.userTranscations.length,
+          );
   }
 }
