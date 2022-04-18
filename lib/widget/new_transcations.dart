@@ -26,8 +26,7 @@ class _NewTranscationsState extends State<NewTranscations> {
   Widget build(BuildContext context) {
     return widget.userTranscations.isEmpty
         ? LayoutBuilder(
-          builder: (context, constraints) => 
-          Column(
+            builder: (context, constraints) => Column(
               children: [
                 Text(
                   'No Transcation Yet',
@@ -44,7 +43,7 @@ class _NewTranscationsState extends State<NewTranscations> {
                     )),
               ],
             ),
-        )
+          )
         : ListView.builder(
             itemBuilder: (context, index) {
               return Dismissible(
@@ -70,17 +69,27 @@ class _NewTranscationsState extends State<NewTranscations> {
                       ),
                       subtitle: Text(DateFormat.yMMMd()
                           .format(widget.userTranscations[index].date)),
-                      trailing: IconButton(
-                        icon: Icon(Icons.edit),
-                        onPressed: () {
-                          _editTranscations(
-                              widget.userTranscations[index].id,
-                              widget.userTranscations[index].title,
-                              widget.userTranscations[index].amount,
-                              widget.userTranscations[index].date);
-                        },
-                        color: Colors.purple,
-                      ),
+                      trailing: MediaQuery.of(context).size.width > 400
+                          ? TextButton(
+                              onPressed: () {
+                                widget.deleteTranscations(index);
+                              },
+                              child: Row(children: [
+                                Icon(Icons.delete,color: Theme.of(context).errorColor,),
+                                Text("Delete",style: TextStyle(color: Theme.of(context).errorColor),)
+                              ]),
+                            )
+                          : IconButton(
+                              icon: Icon(Icons.edit),
+                              onPressed: () {
+                                _editTranscations(
+                                    widget.userTranscations[index].id,
+                                    widget.userTranscations[index].title,
+                                    widget.userTranscations[index].amount,
+                                    widget.userTranscations[index].date);
+                              },
+                              color: Theme.of(context).errorColor,
+                            ),
                     )),
               );
             },

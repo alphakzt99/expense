@@ -17,6 +17,7 @@ class Home extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.purple,
           fontFamily: 'SourceSansPro',
+          errorColor: Theme.of(context).errorColor,
           buttonTheme:
               ThemeData.dark().buttonTheme.copyWith(buttonColor: Colors.purple),
           //textTheme define globally and use ThemeData
@@ -93,26 +94,42 @@ class _ExpenseState extends State<Expense> {
                   })
             ],
           ),
-        
-        if (!isLandscape) Container(
-          height: (MediaQuery.of(context).size.height - AppBar().preferredSize.height - MediaQuery.of(context).padding.top) * 0.3,
-          child: Chart(usertranscations,)),
         if (!isLandscape)
           Container(
-            height: (MediaQuery.of(context).size.height - AppBar().preferredSize.height - MediaQuery.of(context).padding.top) * 0.7,
+              height: (MediaQuery.of(context).size.height -
+                      AppBar().preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.3,
+              child: Chart(
+                usertranscations,
+              )),
+        if (!isLandscape)
+          Container(
+            height: (MediaQuery.of(context).size.height -
+                    AppBar().preferredSize.height -
+                    MediaQuery.of(context).padding.top) *
+                0.6,
             child: NewTranscations(
                 usertranscations, _deleteTranscations, _addTranscation),
           ),
         if (isLandscape)
           _changed
               ? Container(
-                height: (MediaQuery.of(context).size.height - AppBar().preferredSize.height - MediaQuery.of(context).padding.top) * 0.7,
-                child: Chart(usertranscations,))
+                  height: (MediaQuery.of(context).size.height -
+                          AppBar().preferredSize.height -
+                          MediaQuery.of(context).padding.top) *
+                      0.7,
+                  child: Chart(
+                    usertranscations,
+                  ))
               : Container(
-                height: (MediaQuery.of(context).size.height - AppBar().preferredSize.height - MediaQuery.of(context).padding.top) * 0.7,
-                child: NewTranscations(
-                    usertranscations, _deleteTranscations, _addTranscation),
-              ),
+                  height: (MediaQuery.of(context).size.height -
+                          AppBar().preferredSize.height -
+                          MediaQuery.of(context).padding.top) *
+                      0.7,
+                  child: NewTranscations(
+                      usertranscations, _deleteTranscations, _addTranscation),
+                ),
       ])),
     );
   }
