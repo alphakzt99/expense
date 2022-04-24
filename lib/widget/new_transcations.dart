@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:expense/widget/TranscationItem.dart';
 
 class NewTranscations extends StatefulWidget {
   List userTranscations = [];
-  Function add;
+  final Function add;
   Function deleteTranscations;
   NewTranscations(
     this.userTranscations,
@@ -24,9 +24,10 @@ class _NewTranscationsState extends State<NewTranscations> {
   }
 
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return widget.userTranscations.isEmpty
         ? LayoutBuilder(
-            builder: (context, constraints) => Column(
+            builder: (context2, constraints) => Column(
               children: [
                 Text(
                   'No Transcation Yet',
@@ -45,55 +46,12 @@ class _NewTranscationsState extends State<NewTranscations> {
             ),
           )
         : ListView.builder(
-            itemBuilder: (context, index) {
-              return Dismissible(
-                key: ValueKey<int>(index),
-                onDismissed: (direction) {
-                  setState(() {
-                    widget.userTranscations.removeAt(index);
-                  });
-                },
-                child: Card(
-                    margin: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-                    elevation: 6,
-                    child: ListTile(
-                      leading: CircleAvatar(
-                          radius: 30.0,
-                          child: FittedBox(
-                            child: Text(
-                                "\$${widget.userTranscations[index].amount}"),
-                          )),
-                      title: Text(
-                        widget.userTranscations[index].title,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      subtitle: Text(DateFormat.yMMMd()
-                          .format(widget.userTranscations[index].date)),
-                      trailing: MediaQuery.of(context).size.width > 400
-                          ? TextButton(
-                              onPressed: () {
-                                widget.deleteTranscations(index);
-                              },
-                              child: Row(children: [
-                                Icon(Icons.delete,color: Theme.of(context).errorColor,),
-                                Text("Delete",style: TextStyle(color: Theme.of(context).errorColor),)
-                              ]),
-                            )
-                          : IconButton(
-                              icon: Icon(Icons.edit),
-                              onPressed: () {
-                                _editTranscations(
-                                    widget.userTranscations[index].id,
-                                    widget.userTranscations[index].title,
-                                    widget.userTranscations[index].amount,
-                                    widget.userTranscations[index].date);
-                              },
-                              color: Theme.of(context).errorColor,
-                            ),
-                    )),
-              );
+            itemBuilder: (context1, index) {
+              return TranscationItem(transcation: widget.userTranscations[index],deleteTX: widget.deleteTranscations,);
             },
             itemCount: widget.userTranscations.length,
           );
   }
 }
+
+
