@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
 class ChartBar extends StatelessWidget {
+  bool _theme;
   final String label;
   final double amount;
   final double totalspending;
-  ChartBar(this.label, this.amount, this.totalspending);
+  ChartBar(
+    this.label,
+    this.amount,
+    this.totalspending,
+    this._theme
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +20,14 @@ class ChartBar extends StatelessWidget {
           Container(
             height: constraints.maxHeight * 0.15,
             child: FittedBox(
-              child: Text('\$${amount.toStringAsFixed(0)}')),
+                child: Text(
+              '\$${amount.toStringAsFixed(0)}',
+              style: TextStyle(color: Theme.of(context).primaryColorDark),
+            )),
           ),
-          SizedBox(height: constraints.maxHeight * 0.05,),
+          SizedBox(
+            height: constraints.maxHeight * 0.05,
+          ),
           Container(
             height: constraints.maxHeight * 0.6,
             width: 10,
@@ -34,17 +45,23 @@ class ChartBar extends StatelessWidget {
                         heightFactor: totalspending,
                         child: Container(
                           decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
+                              color: _theme ? Theme.of(context).primaryColor : Theme.of(context).primaryColorDark,
                               borderRadius: BorderRadius.circular(10)),
                         ),
                       )
               ],
             ),
           ),
-          SizedBox(height: constraints.maxHeight * 0.05,),
+          SizedBox(
+            height: constraints.maxHeight * 0.05,
+          ),
           Container(
-            height: constraints.maxHeight * 0.15,
-            child: FittedBox(child: Text(label)))
+              height: constraints.maxHeight * 0.15,
+              child: FittedBox(
+                  child: Text(
+                label,
+                style: TextStyle(color: Theme.of(context).primaryColorDark),
+              )))
         ],
       );
     });

@@ -2,36 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:expense/widget/TranscationItem.dart';
 
 class NewTranscations extends StatefulWidget {
+  bool _theme;
   List userTranscations = [];
   final Function add;
   Function deleteTranscations;
   NewTranscations(
-    this.userTranscations,
-    this.deleteTranscations,
-    this.add,
-  );
+      this.userTranscations, this.deleteTranscations, this.add, this._theme);
 
   @override
   _NewTranscationsState createState() => _NewTranscationsState();
 }
 
 class _NewTranscationsState extends State<NewTranscations> {
-  void _editTranscations(
-      String id, String title, double amount, DateTime date) {
-    widget.userTranscations.remove(title);
-    widget.userTranscations.remove(amount);
-    widget.userTranscations.remove(date);
-  }
-
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return widget.userTranscations.isEmpty
         ? LayoutBuilder(
             builder: (context2, constraints) => Column(
               children: [
                 Text(
                   'No Transcation Yet',
-                  style: Theme.of(context).textTheme.headline6,
+                  style: TextStyle(
+                    fontFamily: "PlayFairDisplay",
+                    fontWeight: FontWeight.w700,
+                      fontSize: 20,
+                      color: widget._theme
+                          ? Theme.of(context).primaryColor
+                          : Theme.of(context).primaryColorDark),
                 ),
                 SizedBox(
                   height: 20,
@@ -47,11 +43,13 @@ class _NewTranscationsState extends State<NewTranscations> {
           )
         : ListView.builder(
             itemBuilder: (context1, index) {
-              return TranscationItem(transcation: widget.userTranscations[index],deleteTX: widget.deleteTranscations,);
+              return TranscationItem(
+                transcation: widget.userTranscations[index],
+                deleteTX: widget.deleteTranscations,
+                theme: widget._theme,
+              );
             },
             itemCount: widget.userTranscations.length,
           );
   }
 }
-
-

@@ -5,6 +5,7 @@ import 'package:expense/widget/user_transcations.dart';
 import 'package:expense/models/transcations.dart';
 
 void main() => runApp(Home());
+bool _theme = false;
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -15,15 +16,16 @@ class Home extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: Expense(),
         theme: ThemeData(
-          primarySwatch: Colors.purple,
+          
+          primaryColor: Color.fromRGBO(255, 183, 3, 0.8),
+          primaryColorDark: Color.fromRGBO(0, 37, 56, 1),
+          primaryColorLight: Color.fromRGBO(142, 202, 230, 1),
           fontFamily: 'SourceSansPro',
           errorColor: Theme.of(context).errorColor,
           buttonTheme:
               ThemeData.dark().buttonTheme.copyWith(buttonColor: Colors.purple),
           //textTheme define globally and use ThemeData
-          textTheme: ThemeData.light().textTheme.copyWith(
-              headline6: TextStyle(
-                  fontFamily: 'PlayfairDisplay', fontWeight: FontWeight.w600)),
+          
         ));
   }
 }
@@ -52,6 +54,7 @@ class _ExpenseState extends State<Expense> {
 
   void _startNewTranscation() {
     showModalBottomSheet(
+        backgroundColor: Theme.of(context).primaryColorDark,
         context: context,
         builder: (bctx) {
           return UserTranscations(_addTranscation);
@@ -76,61 +79,100 @@ class _ExpenseState extends State<Expense> {
         onPressed: _startNewTranscation,
       ),
       appBar: AppBar(
-        title: Text('Personal Expenses'),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: _theme
+            ? Theme.of(context).primaryColorDark
+            : Theme.of(context).primaryColorLight,
+        title: Text(
+          'Personal Expenses',
+          style: TextStyle(
+            fontFamily: "PlayFairDisplay",
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+              color: _theme
+                  ? Theme.of(context).primaryColor
+                  : Theme.of(context).primaryColorDark),
+        ),
       ),
       body: Container(
+          color: _theme
+              ? Theme.of(context).primaryColorDark
+              : Theme.of(context).primaryColorLight,
           child: Column(children: [
-        if (isLandscape)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Show Chart"),
-              Switch(
-                  value: _changed,
-                  onChanged: (val) {
-                    setState(() {
-                      _changed = val;
-                    });
-                  })
-            ],
-          ),
-        if (!isLandscape)
-          Container(
-              height: (MediaQuery.of(context).size.height -
-                      AppBar().preferredSize.height -
-                      MediaQuery.of(context).padding.top) *
-                  0.3,
-              child: Chart(
-                usertranscations,
-              )),
-        if (!isLandscape)
-          Container(
-            height: (MediaQuery.of(context).size.height -
-                    AppBar().preferredSize.height -
-                    MediaQuery.of(context).padding.top) *
-                0.6,
-            child: NewTranscations(
-                usertranscations, _deleteTranscations, _addTranscation),
-          ),
-        if (isLandscape)
-          _changed
-              ? Container(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Dark Theme",
+                    style: TextStyle(
+                      fontFamily: "PlayFairDisplay",
+                      fontWeight: FontWeight.w700,
+                        fontSize: 20,
+                        color: _theme
+                            ? Theme.of(context).primaryColor
+                            : Theme.of(context).primaryColorDark)),
+                Switch(
+                    activeColor: Theme.of(context).primaryColor,
+                    value: _theme,
+                    onChanged: (val) {
+                      setState(() {
+                        _theme = val;
+                      });
+                    }),
+              ],
+            ),
+            if (isLandscape)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Show Chart"),
+                  Switch(
+                      value: _changed,
+                      onChanged: (val) {
+                        setState(() {
+                          _changed = val;
+                        });
+                      })
+                ],
+              ),
+            if (!isLandscape)
+              Container(
+                  
                   height: (MediaQuery.of(context).size.height -
                           AppBar().preferredSize.height -
                           MediaQuery.of(context).padding.top) *
-                      0.7,
+                      0.3,
                   child: Chart(
-                    usertranscations,
-                  ))
-              : Container(
-                  height: (MediaQuery.of(context).size.height -
-                          AppBar().preferredSize.height -
-                          MediaQuery.of(context).padding.top) *
-                      0.7,
-                  child: NewTranscations(
-                      usertranscations, _deleteTranscations, _addTranscation),
-                ),
-      ])),
+                    usertranscations,_theme
+                  )),
+            if (!isLandscape)
+              Container(
+                height: (MediaQuery.of(context).size.height -
+                        AppBar().preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.6,
+                child: NewTranscations(usertranscations, _deleteTranscations,
+                    _addTranscation, _theme),
+              ),
+            if (isLandscape)
+              _changed
+                  ? Container(
+                      height: (MediaQuery.of(context).size.height -
+                              AppBar().preferredSize.height -
+                              MediaQuery.of(context).padding.top) *
+                          0.7,
+                      child: Chart(
+                        usertranscations,_theme
+                      ))
+                  : Container(
+                      height: (MediaQuery.of(context).size.height -
+                              AppBar().preferredSize.height -
+                              MediaQuery.of(context).padding.top) *
+                          0.7,
+                      child: NewTranscations(usertranscations,
+                          _deleteTranscations, _addTranscation, _theme),
+                    ),
+          ])),
     );
   }
 }
