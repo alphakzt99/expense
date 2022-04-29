@@ -58,44 +58,58 @@ class _UserTranscationsState extends State<UserTranscations> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             TextField(
-              style: TextStyle(color: Theme.of(context).primaryColor),
+              style: TextStyle(color: Theme.of(context).primaryColorLight),
               decoration: InputDecoration(
-                  labelText: "title",
+                  labelText: "TITLE",
                   labelStyle: TextStyle(color: Theme.of(context).primaryColor)),
               controller: titlecontroller,
               onSubmitted: (arg) => submitData(),
             ),
             TextField(
-              style: TextStyle(color: Theme.of(context).primaryColor),
+              style: TextStyle(color: Theme.of(context).primaryColorLight),
               decoration: InputDecoration(
-                  labelText: "Amount",
+                  labelText: "AMOUNT",
                   labelStyle: TextStyle(color: Theme.of(context).primaryColor)),
               controller: amountcontroller,
               keyboardType: TextInputType.number,
               onSubmitted: (arg) => submitData(),
             ),
-            Row(
-              children: [
-                // ignore: unnecessary_null_comparison
-                Text(
-                  selectedDate == null
-                      ? "Nothing yet"
-                      : 'Picked Date: ${DateFormat.yMd().format(selectedDate)}',
-                  style: TextStyle(color: Theme.of(context).primaryColor),
-                ),
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: TextButton(
-                      onPressed: _datepicker,
-                      child: Text(
-                        'Choose Date',
-                        style: TextStyle(color: Theme.of(context).primaryColor),
-                      )),
-                )
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Row(
+                children: [
+                  // ignore: unnecessary_null_comparison
+                  Flexible(
+                    flex: 2,
+                    fit: FlexFit.tight,
+                    child: Text(
+                      selectedDate == null
+                          ? "Nothing yet"
+                          : 'Picked Date: ${DateFormat.yMd().format(selectedDate)}',
+                      style: TextStyle(fontSize: 15,color: Theme.of(context).primaryColor),
+                    ),
+                  ),
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: TextButton(
+                        onPressed: _datepicker,
+                        child: Text(
+                          'CHOOSE DATE',
+                          style: TextStyle(fontSize:15,color: Theme.of(context).primaryColor),
+                        )),
+                  )
+                ],
+              ),
             ),
             ElevatedButton(
-                onPressed: submitData, child: Text("Add Transcation"))
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        Theme.of(context).primaryColor)),
+                onPressed: submitData,
+                child: Text(
+                  "ADD TRANSCATION",
+                  style: TextStyle(color: Theme.of(context).primaryColorDark),
+                ))
           ],
         ),
       ),

@@ -68,17 +68,8 @@ class _ExpenseState extends State<Expense> {
       });
     });
   }
-
-  @override
-  Widget build(BuildContext context) {
-    var isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: _startNewTranscation,
-      ),
-      appBar: AppBar(
+  PreferredSizeWidget appBar(){
+    return AppBar(
         centerTitle: true,
         elevation: 0,
         backgroundColor: _theme
@@ -94,7 +85,18 @@ class _ExpenseState extends State<Expense> {
                   ? Theme.of(context).primaryColor
                   : Theme.of(context).primaryColorDark),
         ),
+      );
+  }
+  @override
+  Widget build(BuildContext context) {
+    var isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: _startNewTranscation,
       ),
+      appBar: appBar(),
       body: Container(
           color: _theme
               ? Theme.of(context).primaryColorDark
