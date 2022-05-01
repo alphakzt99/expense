@@ -83,9 +83,7 @@ class _UserTranscationsState extends State<UserTranscations> {
                     flex: 2,
                     fit: FlexFit.tight,
                     child: Text(
-                      selectedDate == null
-                          ? "Nothing yet"
-                          : 'Picked Date: ${DateFormat.yMd().format(selectedDate)}',
+                       'Picked Date: ${DateFormat.yMd().format(selectedDate)}',
                       style: TextStyle(fontSize: 15,color: Theme.of(context).primaryColor),
                     ),
                   ),

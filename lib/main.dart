@@ -153,8 +153,8 @@ class _ExpenseState extends State<Expense> {
                         AppBar().preferredSize.height -
                         MediaQuery.of(context).padding.top) *
                     0.6,
-                child: NewTranscations(usertranscations, _deleteTranscations,
-                    _addTranscation, _theme),
+                child: NewTranscations(userTranscations: usertranscations, deleteTranscations : _deleteTranscations,
+                    add: _addTranscation, theme: _theme),
               ),
             if (isLandscape)
               _changed
@@ -171,8 +171,8 @@ class _ExpenseState extends State<Expense> {
                               AppBar().preferredSize.height -
                               MediaQuery.of(context).padding.top) *
                           0.7,
-                      child: NewTranscations(usertranscations,
-                          _deleteTranscations, _addTranscation, _theme),
+                      child: NewTranscations(userTranscations: usertranscations,deleteTranscations: 
+                          _deleteTranscations, add : _addTranscation, theme: _theme),
                     ),
           ])),
     );

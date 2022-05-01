@@ -2,18 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:expense/widget/TranscationItem.dart';
 
 class NewTranscations extends StatefulWidget {
-  bool _theme;
+  bool theme;
   List userTranscations = [];
   final Function add;
   Function deleteTranscations;
   NewTranscations(
-      this.userTranscations, this.deleteTranscations, this.add, this._theme);
+      {Key? key,
+      required this.userTranscations,
+      required this.deleteTranscations,
+      required this.add,
+      required this.theme})
+      : super(key: key);
 
   @override
   _NewTranscationsState createState() => _NewTranscationsState();
 }
 
 class _NewTranscationsState extends State<NewTranscations> {
+  
   Widget build(BuildContext context) {
     return widget.userTranscations.isEmpty
         ? LayoutBuilder(
@@ -22,10 +28,10 @@ class _NewTranscationsState extends State<NewTranscations> {
                 Text(
                   'No Transcation Yet',
                   style: TextStyle(
-                    fontFamily: "PlayFairDisplay",
-                    fontWeight: FontWeight.w700,
+                      fontFamily: "PlayFairDisplay",
+                      fontWeight: FontWeight.w700,
                       fontSize: 20,
-                      color: widget._theme
+                      color: widget.theme
                           ? Theme.of(context).primaryColor
                           : Theme.of(context).primaryColorDark),
                 ),
@@ -41,15 +47,13 @@ class _NewTranscationsState extends State<NewTranscations> {
               ],
             ),
           )
-        : ListView.builder(
-            itemBuilder: (context1, index) {
-              return TranscationItem(
-                transcation: widget.userTranscations[index],
+        : ListView(children: widget.userTranscations.map((tx) => TranscationItem(
+                key: ValueKey(tx.id),
+                transcation: tx,
                 deleteTX: widget.deleteTranscations,
-                theme: widget._theme,
+                theme: widget.theme,
+              )).toList()
               );
-            },
-            itemCount: widget.userTranscations.length,
-          );
+          
   }
 }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:expense/models/transcations.dart';
+import 'dart:math';
 
-class TranscationItem extends StatelessWidget {
+class TranscationItem extends StatefulWidget {
   TranscationItem(
       {Key? key,
       required this.transcation,
@@ -12,6 +13,24 @@ class TranscationItem extends StatelessWidget {
   final Transcations transcation;
   final Function deleteTX;
   final bool theme;
+
+  @override
+  State<TranscationItem> createState() => _TranscationItemState();
+}
+
+class _TranscationItemState extends State<TranscationItem> {
+  late Color bgcolor;
+  @override
+  void initState() {
+    const availableColors = [
+      Colors.white,
+      Colors.limeAccent,
+      Colors.cyanAccent
+    ];
+    bgcolor = availableColors[Random().nextInt(3)];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var color1 = Theme.of(context).primaryColor;
@@ -21,28 +40,29 @@ class TranscationItem extends StatelessWidget {
         margin: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
         elevation: 6,
         child: ListTile(
-          tileColor: theme? color1:color2,
+          tileColor: widget.theme ? color1 : color2,
           leading: CircleAvatar(
-              backgroundColor: theme ? color2 : color1,
+              backgroundColor: bgcolor,
               radius: 30.0,
               child: FittedBox(
                 child: Text(
-                  "\$${transcation.amount}",
-                  style: TextStyle(color: theme? color3:color2),
+                  "\$${widget.transcation.amount}",
+                  style: TextStyle(color: widget.theme ? color3 : color2),
                 ),
               )),
           title: Text(
-            transcation.title,
-            style: TextStyle(fontSize: 25, color: theme ? color2 : color1),
+            widget.transcation.title,
+            style:
+                TextStyle(fontSize: 25, color: widget.theme ? color2 : color1),
           ),
           subtitle: Text(
-            DateFormat.yMMMd().format(transcation.date),
-            style: TextStyle(color: theme ? color2 : color1),
+            DateFormat.yMMMd().format(widget.transcation.date),
+            style: TextStyle(color: widget.theme ? color2 : color1),
           ),
           trailing: MediaQuery.of(context).size.width > 400
               ? TextButton.icon(
                   onPressed: () {
-                    deleteTX(transcation.id);
+                    widget.deleteTX(widget.transcation.id);
                   },
                   icon: Icon(
                     Icons.delete,
@@ -56,7 +76,7 @@ class TranscationItem extends StatelessWidget {
               : IconButton(
                   icon: Icon(Icons.delete),
                   onPressed: () {
-                    deleteTX(transcation.id);
+                    widget.deleteTX(widget.transcation.id);
                   },
                   color: Theme.of(context).errorColor,
                 ),

@@ -5,15 +5,12 @@ class ChartBar extends StatelessWidget {
   final String label;
   final double amount;
   final double totalspending;
-  ChartBar(
-    this.label,
-    this.amount,
-    this.totalspending,
-    this._theme
-  );
+  ChartBar(this.label, this.amount, this.totalspending, this._theme);
 
   @override
   Widget build(BuildContext context) {
+    Color color1 = Theme.of(context).primaryColor;
+    Color color2 = Theme.of(context).primaryColorDark;
     return LayoutBuilder(builder: (context, constraints) {
       return Column(
         children: [
@@ -22,7 +19,7 @@ class ChartBar extends StatelessWidget {
             child: FittedBox(
                 child: Text(
               '\$${amount.toStringAsFixed(0)}',
-              style: TextStyle(color: Theme.of(context).primaryColorDark),
+              style: TextStyle(color: color2),
             )),
           ),
           SizedBox(
@@ -35,7 +32,7 @@ class ChartBar extends StatelessWidget {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                      border: Border.all(width: 1.0, color: Colors.grey),
+                      border: Border.all(width: 1.0, color: color2),
                       color: Colors.white30,
                       borderRadius: BorderRadius.circular(10)),
                 ),
@@ -45,7 +42,9 @@ class ChartBar extends StatelessWidget {
                         heightFactor: totalspending,
                         child: Container(
                           decoration: BoxDecoration(
-                              color: _theme ? Theme.of(context).primaryColor : Theme.of(context).primaryColorDark,
+                              color: _theme
+                                  ? color1
+                                  : color2,
                               borderRadius: BorderRadius.circular(10)),
                         ),
                       )
@@ -60,7 +59,7 @@ class ChartBar extends StatelessWidget {
               child: FittedBox(
                   child: Text(
                 label,
-                style: TextStyle(color: Theme.of(context).primaryColorDark),
+                style: TextStyle(color: color2),
               )))
         ],
       );
